@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>House Price Prediction</title>
+    </head>
+    <body style="font-family: Arial; background-color: #f4f6f8">
+
+        <div style="width: 400px; margin: 80px auto; background: white; padding: 25px; border-radius: 8px;">
+            
+            <h1 style="text-align:center;">House Price Prediction</h1>
+            <p style="text-align:center; color: gray;">Enter house details below:</p>
+
+            <form method="post">
+                {% csrf_token %}
+    
+                <label>Area (sq ft):</label>
+                <input type="number" name="area" required style="width:100%; margin-bottom:10px;"><br><br>
+    
+                <label>Bedrooms:</label><br>
+                <input type="number" name="bedrooms" required style="width:100%; margin-bottom:10px"><br><br>
+    
+                <label>Bathrooms:</label><br>
+                <input type="number" name="bathrooms" required style="width:100%; margin-bottom:10px;"><br><br>
+    
+                <label>Age of House (years):</label><br>
+                <input type="number" name="age" required style="width:100%; margin-bottom:15px;"><br><br>
+    
+                <button type="submit" style="width:100%; padding:8px;">Predict Price</button>          
+            </form>
+    
+            {% if prediction %}
+            <hr>
+            <h3 style="text-align:center; color:green;">Predicted House Price: ₹ {{ prediction }}</h2>
+            {% endif %}
+    
+            {% if error %}
+            <p style="color:red; text-align:center;">{{ error }}</p>
+            {% endif %}
+
+        </div>
+
+    </body>
+</html>
