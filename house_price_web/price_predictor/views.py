@@ -1,11 +1,16 @@
 from django.shortcuts import render
+from django.conf import settings
 import pickle
 import numpy as np
 import os
 
 # Load the model
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-model_path = os.path.join(BASE_DIR, 'model', r'C:\Academics 25-26\4th Sem\My Work\Projects\house_price_prediction\model\house_price_model.pkl')
+BASE_DIR = settings.BASE_DIR
+model_path = os.path.join(
+    BASE_DIR.parent,
+    "model",
+    "house_price_model.pkl"
+)
 
 with open(model_path, 'rb') as file:
     model = pickle.load(file)
@@ -38,4 +43,4 @@ def home(request):
     return render(request, 'home.html', {
         'prediction': prediction,
         'error': error
-        })
+    })
