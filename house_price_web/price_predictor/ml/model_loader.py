@@ -1,12 +1,17 @@
 import logging
 import pickle
 import os
+from django.conf import settings
 
 logger = logging.getLogger('price_predictor')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-MODEL_PATH = os.path.join(BASE_DIR, 'model', 'house_price_model.pkl')
+MODEL_PATH = os.path.join(
+    settings.BASE_DIR.parent,
+    "model",
+    "house_price_model.pkl"
+)
 SCALER_PATH = os.path.join(BASE_DIR, 'model', 'scaler.pkl')
 
 def load_model():
