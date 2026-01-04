@@ -45,12 +45,21 @@
                 margin-bottom: 6px;
             }
 
-            input {
+            input[type="number"],
+            input[type="text"],
+            input[type=range] {
                 width: 100%;
+                box-sizing: border-box;
                 padding: 10px 12px;
                 border-radius: 8px;
                 border: 1px solid #d1d5db;
                 font-size: 14px;
+            }
+
+            input[type="range"] {
+                padding: 0;
+                margin-top: 6px;
+                accent-color: #6366f1;
             }
 
             input:focus {
@@ -131,7 +140,8 @@
                 width: 36px;
                 height: 36px;
                 margin: 0 auto 8px;
-                border: 4px solid #6366f1;
+                border: 4px solid #e5e7eb;
+                border-top: 4px solid #6366f1;
                 border-radius: 50%;
                 animation: spin 1s linear infinite;
             }
@@ -153,25 +163,12 @@
         </style>
     </head>
 
-    <script>
-        const form = document.querySelector("form");
-        const loader = document.getElementById("loader");
-        const button = document.querySelector(".cta-btn");
-
-        form.addEventListener("submit", () => {
-            loader.classList.remove("hidden");
-            button.disabled = true;
-            button.innerText = "Predicting...";
-        })
-    </script>
-
-
     <body>
 
         <div class="card">
             
             <h1>House Price Prediction</h1>
-            <p>Enter house details below:</p>
+            <p class="subtitle">Enter house details below:</p>
 
             <form method="post">
                 {% csrf_token %}
@@ -184,31 +181,32 @@
                     </small>
                 </div>
 
-                <div>
+                <div class="form-group">
                     {{ form.bedrooms.label_tag }}
                     {{ form.bedrooms }}
                     {{ form.bedrooms.errors }}
                 </div>
 
-                <div>
+                <div class="form-group">
                     {{ form.bathrooms.label_tag }}
                     {{ form.bathrooms }}
                     {{ form.bathrooms.errors }}
                 </div>
 
-                <div>
+                <div class="form-group">
                     {{ form.age.label_tag }}
                     {{ form.age }}
                     {{ form.age.errors }}
                 </div>
     
-                <button class="cta-btn" type="submit">Predict Price</button>          
+                <div id="loader" class="loader hidden">
+                    <div class="spinner"></div>
+                    <p>Predicting price...</p>
+                </div>
+                
+                <button class="cta-btn" type="submit">Predict Price</button>
             </form>
 
-            <div id="loader" class="loader hidden">
-                <div class="spinner"></div>
-                <p>Predicting price...</p>
-            </div>
     
             {% if result %}
             <div class="result-box">
@@ -225,11 +223,29 @@
                 </p>
             </div>
             {% endif %}
-    
-            {% if error %}
-            <p style="color:red; text-align:center;">{{ error }}</p>
-            {% endif %}
+
         </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+            const loader = document.getElementById("loader");
+            const button = document.querySelector(".cta-btn");
+
+            if (!form || !loader || !button) return;
+
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                loader.classList.remove("hidden");
+                button.disabled = true;
+                button.innerText = "Predicting...";
+
+                setTimeout(() => {
+                    form.submit();
+                }, 300);
+            });
+        });
+    </script>
     </body>
 </html>
