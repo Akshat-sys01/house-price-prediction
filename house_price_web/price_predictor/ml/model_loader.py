@@ -5,14 +5,17 @@ from django.conf import settings
 
 logger = logging.getLogger('price_predictor')
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = settings.BASE_DIR.parent
 
 MODEL_PATH = os.path.join(
-    settings.BASE_DIR.parent,
+    BASE_DIR,
     "model",
     "house_price_model.pkl"
 )
-SCALER_PATH = os.path.join(BASE_DIR, 'model', 'scaler.pkl')
+SCALER_PATH = os.path.join(
+    BASE_DIR,
+    'model',
+    'scaler.pkl')
 
 def load_model():
     logger.info("Loading ML model")
