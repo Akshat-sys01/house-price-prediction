@@ -12,25 +12,52 @@
 
             <form method="post">
                 {% csrf_token %}
-    
-                <label>Area (sq ft):</label>
-                <input type="number" name="area" required style="width:100%; margin-bottom:10px;"><br><br>
-    
-                <label>Bedrooms:</label><br>
-                <input type="number" name="bedrooms" required style="width:100%; margin-bottom:10px"><br><br>
-    
-                <label>Bathrooms:</label><br>
-                <input type="number" name="bathrooms" required style="width:100%; margin-bottom:10px;"><br><br>
-    
-                <label>Age of House (years):</label><br>
-                <input type="number" name="age" required style="width:100%; margin-bottom:15px;"><br><br>
+
+                <div>
+                    {{ form.area.label_tag }}
+                    {{ form.area }}
+                    <small style="color:gray">
+                        {{ form.area.help_text }}
+                    </small>
+                </div>
+
+                <div>
+                    {{ form.bedrooms.label_tag }}
+                    {{ form.bedrooms }}
+                    {{ form.bedrooms.errors }}
+                </div>
+
+                <div>
+                    {{ form.bathrooms.label_tag }}
+                    {{ form.bathrooms }}
+                    {{ form.bathrooms.errors }}
+                </div>
+
+                <div>
+                    {{ form.age.label_tag }}
+                    {{ form.age }}
+                    {{ form.age.errors }}
+                </div>
     
                 <button type="submit" style="width:100%; padding:8px;">Predict Price</button>          
             </form>
     
-            {% if prediction %}
+            {% if result %}
             <hr>
-            <h3 style="text-align:center; color:green;">Predicted House Price: ₹ {{ prediction }}</h2>
+
+            <h3 style="text-align:center; color:green;">
+                Estimated Price: ₹ {{ result.prediction }}
+            </h3>
+
+            <p style="text-align: center;">
+                Likely price range:
+                <strong>₹ {{ result.lower }} - ₹ {{ result.upper }}</strong>
+            </p>
+
+            <p style="text-align:center;">
+                This estimate is based on historical housing data and machine learning.
+                Actual prices may vary due to location, condition, and market trends.
+            </p>
             {% endif %}
     
             {% if error %}

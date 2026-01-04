@@ -1,46 +1,40 @@
+import logging
 from django.shortcuts import render
-from django.conf import settings
-import pickle
-import numpy as np
-import os
+from price_predictor.forms import HousePriceForm
+from price_predictor.ml.predictor import predict_price_with_confidence
 
-# Load the model
-BASE_DIR = settings.BASE_DIR
-model_path = os.path.join(
-    BASE_DIR.parent,
-    "model",
-    "house_price_model.pkl"
-)
-
-with open(model_path, 'rb') as file:
-    model = pickle.load(file)
+logger = logging.getLogger('price_predictor')
 
 # Create your views here.
 def home(request):
-    prediction = None
-    error = None
+    result = None
+    form = HousePriceForm()
 
     if request.method == 'POST':
-        try:   
-            area = float(request.POST.get('area'))
-            bedrooms = float(request.POST.get('bedrooms'))
-            bathrooms = float(request.POST.get('bathrooms'))
-            age = float(request.POST.get('age'))
+        form = HousePriceForm(request.POST)
 
-            # Validation rules
-            if area <= 0 or bedrooms <= 0 or bathrooms <= 0 or age < 0:
-                raise ValueError("Invalid input values")
+        if form.is_valid():
+            data = form.cleaned_data
+            logger.info(
+                "Prediction request received | area=%s, bedrooms=%s, bathrooms=%s, age=%s",
+                data['area'], data['bedrooms'], data['bathrooms'], data['age']
+            )
 
-            # Prepare data for model
-            input_data = np.array([[area, bedrooms, bathrooms, age]])
-        
-            # Predict
-            prediction = round(model.predict(input_data)[0], 2)
+            try:
+                result = predict_price_with_confidence(
+                    area=data['area'],
+                    bedrooms=data['bedrooms'],
+                    bathrooms=data['bathrooms'],
+                    age=data['age']
+                )
+                logger.info("Prediction successful | price=%s", result['prediction'])
 
-        except:
-            error = "Please enter valid positive values."
+            except Exception as e:
+                logger.error("Prediction failed | error=%s", str(e))
+        else:
+            logger.warning("Form validation failed")
 
     return render(request, 'home.html', {
-        'prediction': prediction,
-        'error': error
+        'form': form,
+        'result': result,
     })
