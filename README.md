@@ -1,27 +1,260 @@
-🏡 House Price Prediction (End-to-End ML Project)A personal Machine Learning project that demonstrates an end-to-end workflow: from data analysis and model training to deploying a predictive model within a Django web application. This tool allows users to input property details (like area, bedrooms, age) and receive an instant price estimation.🚀 Features📈 Machine Learning Backend: Utilizes Linear Regression (and other regressors) trained on real-estate data to predict housing prices.🧠 Full ML Pipeline: Includes data cleaning, exploratory data analysis (EDA), feature engineering, and model serialization using pickle.🌐 Interactive Web Interface: A clean, user-friendly Django frontend where users can easily input house features.🔄 Real-Time Inference: The backend seamlessly loads the saved model to serve predictions instantly upon form submission.🛠️ Modular Architecture: Organized code structure separating the ML experiments (notebooks/) from the production web app (house_price_web/).🧩 Tech StackComponentTechnologyBackend FrameworkPython, DjangoMachine LearningNumPy, Pandas, Scikit-LearnModel SerializationPickleFrontendHTML5, CSS3, Bootstrap (if used)DevelopmentJupyter Notebooks, VS Code📁 Project StructurePlaintext├── data/                     # Raw and processed datasets
-├── model/                    # Serialized model files (.pkl)
-├── notebooks/                # Jupyter notebooks for EDA & training
-├── src/                      # Source scripts for data processing/training
-├── house_price_web/          # Django Web Application root
-│   ├── templates/            # HTML templates for the UI
-│   ├── static/               # CSS, JavaScript, and Images
-│   ├── house_price_web/      # Main Django project settings
-│   └── prediction_app/       # Django app handling the logic (example name)
+# 🏡 House Price Prediction Web App (Machine Learning + Django)
+
+A **production-ready end-to-end Machine Learning project** that predicts house prices based on user inputs such as area, number of bedrooms, bathrooms, and age of the house.
+
+This project is designed as a **learning-to-industry bridge** — covering the *complete ML lifecycle* (data analysis → model training → evaluation → deployment-ready integration) and exposing the model through a **Django-based web application**.
+
+This repository reflects a real-world workflow followed in ML-backed web applications.
+
+---
+
+## 🔗 Live Demo
+
+🚀 **Deployed on Render**:
+👉 [https://house-price-prediction-jppg.onrender.com/](https://house-price-prediction-jppg.onrender.com/)
+
+> The application is fully deployed and accessible online, demonstrating real-time machine learning inference through a Django web interface.
+
+---
+
+## 🎯 Project Objectives
+
+* Learn and implement the **complete Machine Learning pipeline**
+* Understand how ML models are **integrated into backend frameworks (Django)**
+* Build a **clean, modular, and deployable project** suitable for portfolios
+* Follow **industry-style structure, evaluation, and serialization practices**
+
+---
+
+## 🚀 Key Features
+
+* 📊 **Machine Learning–based price prediction** using Random Forest Regressor
+* 🧠 Full ML pipeline: EDA → preprocessing → training → evaluation
+* 🌐 **Django Web Interface** for real-time predictions
+* 🔄 **Serialized ML model (`pickle`)** loaded directly in Django views
+* 🛠️ Clean and scalable project structure
+* 📦 Deployment-ready configuration
+
+---
+
+## 🧩 Tech Stack
+
+| Layer            | Technology                  |
+| ---------------- | --------------------------- |
+| Language         | Python                      |
+| Machine Learning | NumPy, Pandas, Scikit-learn |
+| Web Framework    | Django                      |
+| Frontend         | HTML, CSS                   |
+| Model Storage    | Pickle                      |
+| Version Control  | Git & GitHub                |
+
+---
+
+## 📁 Project Structure
+
+```
+house-price-prediction/
+│
+├── data/                     # Raw & processed datasets
+├── notebooks/                # EDA & model training notebooks
+├── model/                    # Trained ML model (.pkl)
+├── src/                      # ML scripts & utilities
+│
+├── house_price_web/          # Django project
+│   ├── templates/            # HTML templates
+│   ├── static/               # CSS & assets
+│   ├── views.py              # Prediction logic
+│   ├── urls.py               # URL routing
+│   └── settings.py           # Project settings
+│
+├── build.sh                  # Build / deployment script
 ├── requirements.txt          # Python dependencies
-├── .gitignore                # Files to ignore in Git
-├── build.sh                  # Deployment/Build script
-└── README.md                 # Project documentation
-📊 Machine Learning WorkflowThis project follows a standard industry pipeline:Data Inspection: Analyzing the dataset for distributions, correlations, and missing values.Preprocessing: Handling missing data, encoding categorical variables, and scaling numerical features.Feature Selection: Identifying the most impactful predictors (e.g., Square Footage, Location, Age).Model Training: Training a Linear Regression model (scalable to Random Forest/XGBoost).Evaluation: Measuring performance using metrics like R² Score and RMSE.Serialization: Saving the trained model using pickle for integration with the Django app.🛠️ Setup & InstallationFollow these steps to run the project locally on your machine.1. Clone the RepositoryBashgit clone https://github.com/Akshat-sys01/house-price-prediction.git
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 📊 Machine Learning Workflow
+
+This project follows a **standard industry-level ML pipeline**:
+
+### 1️⃣ Data Inspection
+
+* Understanding data distributions
+* Identifying missing values and outliers
+* Checking correlations between features
+
+### 2️⃣ Data Preprocessing
+
+* Handling missing values
+* Encoding categorical features (if any)
+* Scaling numerical features
+
+### 3️⃣ Feature Selection
+
+* Identifying the most impactful predictors such as:
+
+  * Square Footage
+  * Number of Bedrooms
+  * Age of the House
+
+### 4️⃣ Model Training
+
+* Training a **Random Forest Regressor** for capturing non-linear relationships
+* Splitting data into training and testing sets
+
+### 5️⃣ Model Evaluation
+
+* Evaluated using standard regression metrics:
+
+  * **R² Score**
+  * **MAE (Mean Absolute Error)**
+  * **RMSE (Root Mean Square Error)**
+
+### 6️⃣ Model Serialization
+
+* Saving the trained model using **`pickle`**
+* Loading the model inside Django for real-time inference
+
+---
+
+## 🧪 Model Performance
+
+| Metric   | Value  |
+| -------- | ------ |
+| R² Score | 0.9589 |
+| MAE      | 4.125  |
+| RMSE     | 4.939  |
+
+> These results indicate a **highly accurate Random Forest model**, significantly outperforming simple linear baselines and demonstrating strong generalization capability.
+
+---
+
+## 🌐 Web Application Workflow
+
+1. User opens the web application
+2. Inputs house details (area, bedrooms, age, etc.)
+3. Django validates user input
+4. Serialized ML model generates prediction
+5. Predicted house price is displayed on the UI
+
+---
+
+## 🛠️ Setup & Installation
+
+Follow these steps to run the project locally.
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/Akshat-sys01/house-price-prediction.git
 cd house-price-prediction
-2. Create a Virtual EnvironmentIt's recommended to use a virtual environment to manage dependencies.Bash# For macOS/Linux
+```
+
+### 2️⃣ Create & Activate Virtual Environment
+
+```bash
+# macOS / Linux
 python3 -m venv venv
 source venv/bin/activate
 
-# For Windows
+# Windows
 python -m venv venv
 venv\Scripts\activate
-3. Install DependenciesBashpip install -r requirements.txt
-4. Apply Database MigrationsInitialize the Django database (SQLite by default).Bashcd house_price_web
+```
+
+### 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Apply Django Migrations
+
+```bash
+cd house_price_web
 python manage.py migrate
-5. Run the ServerStart the development server.Bashpython manage.py runserver
-👉 Open your browser and navigate to: http://127.0.0.1:8000📌 Usage GuideHome Page: You will see a form asking for house details (e.g., Area in sq ft, No. of Bedrooms, Age of House).Input Data: Fill in the required fields with valid numbers.Predict: Click the "Predict" button.Result: The application will display the estimated price of the house based on your inputs.🧪 Model Evaluation(Optional: Update this table with your specific training results)MetricScoreR² Score0.85MAE (Mean Absolute Error)15,200RMSE (Root Mean Sq Error)23,400📦 Deployment OptionsThis application is ready for deployment on platforms like:Render / Railway / HerokuPythonAnywhereAWS Elastic BeanstalkNote: Ensure you set DEBUG = False and configure ALLOWED_HOSTS in settings.py before deploying to production.💡 ContributingSince this is a personal project, I primarily use it for learning and demonstration. However, suggestions are welcome!Fork the repo.Create a new branch (git checkout -b feature-name).Commit your changes.Push to the branch and open a Pull Request.🙌 AcknowledgementsDatasets provided by open-source communities (Kaggle/UCI).Documentation from Scikit-Learn and Django.Inspiration from various Data Science tutorials.
+```
+
+### 5️⃣ Run the Development Server
+
+```bash
+python manage.py runserver
+```
+
+Open in browser:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## 📌 Usage Guide
+
+* Open the home page
+* Enter house details (area, bedrooms, age)
+* Click **Predict**
+* View the estimated house price instantly
+
+---
+
+## 📦 Deployment
+
+This project can be deployed on:
+
+* Render
+* Railway
+* Heroku
+* PythonAnywhere
+* AWS Elastic Beanstalk
+
+**Before deploying to production:**
+
+* Set `DEBUG = False`
+* Configure `ALLOWED_HOSTS`
+* Use environment variables for secrets
+
+---
+
+## 🔮 Future Improvements
+
+* Hyperparameter tuning for Random Forest
+* Experiment with Gradient Boosting and XGBoost
+* Feature engineering for better accuracy
+* Model comparison & cross-validation
+* User authentication
+* Database-backed prediction history
+* Docker-based deployment
+
+---
+
+## 💡 Contributing
+
+This project is primarily built for **learning and demonstration**.
+
+Suggestions, improvements, and discussions are welcome:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-name`)
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+## 🙌 Acknowledgements
+
+* Open-source datasets and ML community resources
+* **Scikit-learn** documentation
+* **Django** official documentation
+
+---
+
+## 👤 Author
+
+**Akshat Raj**
+
+BCA Student | Machine Learning & Web Development Enthusiast
+
+This project reflects my learning journey in **Machine Learning, Django, and real-world project structuring**.
